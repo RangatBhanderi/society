@@ -15,6 +15,9 @@ class _NoticeScreenState extends State<NoticeScreen> {
       appBar: AppBar(),
       body: Column(children: [
         TextFormField( ),
+        TextFormField( ),
+        TextFormField( ),
+        TextFormField( ),
       ],),
     );
   }
