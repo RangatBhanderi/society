@@ -13,12 +13,14 @@ class _NoticeScreenState extends State<NoticeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(children: [
-        TextFormField( ),
-        TextFormField( ),
-        TextFormField( ),
-        TextFormField( ),
-      ],),
+      body: Column(
+        children: [
+          TextFormField(),
+          TextFormField(),
+          TextFormField(),
+          TextFormField(),
+        ],
+      ),
     );
   }
 }

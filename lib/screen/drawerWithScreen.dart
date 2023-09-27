@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:society/drawerWithController.dart';
 
@@ -14,7 +15,15 @@ class DrawerWithScreen extends StatefulWidget {
 }
 
 class _DrawerWithScreenState extends State<DrawerWithScreen> {
-  DrawerWithController drawerWithController=Get.put(DrawerWithController());
+  DrawerWithController drawerWithController = Get.put(DrawerWithController());
+  var maskFormatter = new MaskTextInputFormatter(
+      mask: '##/##/####',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+  var time = new MaskTextInputFormatter(
+      mask: '##:##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
 
   @override
   Widget build(BuildContext context) {
@@ -166,128 +175,264 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding:  EdgeInsets.all(20.0),
-            child: Container(
-              height:45,
-              child: TextFormField(
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  fillColor: Color(0xffa6b8ba),
-                  filled: true,
-                  isDense: true,
-                  contentPadding: EdgeInsets.symmetric(vertical: 1),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.black,
-                  ),
-                  hintText: 'Search',
-                  border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(50)), // Hide the default border
-                ),
-              ),
-            ),
-          ),
-          Obx(() {
-              return drawerWithController.showDialPad!=true?SizedBox(): Expanded(
-                child: Container(
-                  width: 100.w,
-                  margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xfff2b90c),
-                      Color(0xfff78902),
-                    ],
-                  )),
-                  child: Column(
-                    children: [
-                      GetBuilder(
-                        init: DrawerWithController(),
-                        builder: (GetxController controller) {
-                          return Container(
-                            margin: EdgeInsets.only(top: 3.h),
-                            height: 10.w,
-                            width: 50.w,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5.w),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(drawerWithController.numbers.length>=1?drawerWithController.numbers[0].toString():"-",
-                                    style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold)),
-                                Text(drawerWithController.numbers.length>=2?drawerWithController.numbers[1].toString():"-",
-                                    style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold)),
-                                Text(drawerWithController.numbers.length>=3?drawerWithController.numbers[2].toString():"-",
-                                    style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold)),
-                                Text(drawerWithController.numbers.length>=4?drawerWithController.numbers[3].toString():"-",
-                                    style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: GridView.builder(
-                            padding: EdgeInsets.all(10),
-                            itemCount: 12,
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 18.w,
-                                mainAxisSpacing: 1.w),
-                            itemBuilder: (context, index) {
-                              return index == 9 || index == 11
-                                  ? SizedBox()
-                                  : GestureDetector(
-                                      onTap: () {
-                                        drawerWithController.addNumbers(index);
-                                      },
-                                      child: Container(
-                                          child: Center(
-                                              child: Text(
-                                        index == 10 ? "0" : "${index + 1}",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15.sp,
-                                            fontWeight: FontWeight.bold),
-                                      ))),
-                                    );
-                            },
+      body: Container(
+        height: 100.h,
+        width: 100.w,
+        child: Column(
+          children: [
+            Obx(() {
+              return drawerWithController.showDialPad != true
+                  ? Expanded(
+                      child: Container(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Padding(
+                                  padding: EdgeInsets.all(20.0),
+                                  child: Container(
+                                    height: 50,
+                                    child: TextFormField(
+                                      style: TextStyle(color: Colors.white),
+                                      decoration: InputDecoration(
+                                        fillColor: Color(0xffa6b8ba),
+                                        filled: true,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 1, horizontal: 20),
+
+                                        hintText: 'Topic of notice',
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                50)), // Hide the default border
+                                      ),
+                                    ),
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.all(20.0),
+                                  child: Container(
+                                    height: 50,
+                                    child: TextFormField(
+                                      inputFormatters: [maskFormatter],
+                                      style: TextStyle(color: Colors.white),
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        fillColor: Color(0xffa6b8ba),
+                                        filled: true,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 1, horizontal: 20),
+
+                                        hintText: 'Notice date',
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                50)), // Hide the default border
+                                      ),
+                                    ),
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.all(20.0),
+                                  child: Container(
+                                    height: 50,
+                                    child: TextFormField(
+                                      inputFormatters: [time],
+                                      style: TextStyle(color: Colors.white),
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        fillColor: Color(0xffa6b8ba),
+                                        filled: true,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 1, horizontal: 20),
+                                        hintText: 'Notice time',
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                50)), // Hide the default border
+                                      ),
+                                    ),
+                                  )),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20,top: 10),
+                                child: TextFormField(
+                                  maxLines: 7,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: InputDecoration(
+                                    fillColor: Color(0xffa6b8ba),
+                                    filled: true,
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 20, horizontal: 20),
+                                    hintText: 'Notice description',
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            10)), // Hide the default border
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              );
-            }
-          )
-        ],
+                    )
+                  : Expanded(
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Padding(
+                                padding: EdgeInsets.all(20.0),
+                                child: Container(
+                                  height: 50,
+                                  child: TextFormField(
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                      fillColor: Color(0xffa6b8ba),
+                                      filled: true,
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 1, horizontal: 20),
+
+                                      hintText: 'Search',
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              50)), // Hide the default border
+                                    ),
+                                  ),
+                                )),
+                            Expanded(
+                              child: Container(
+                                width: 100.w,
+                                margin: EdgeInsets.only(
+                                    bottom: 10, left: 10, right: 10),
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Color(0xfff2b90c),
+                                    Color(0xfff78902),
+                                  ],
+                                )),
+                                child: Column(
+                                  children: [
+                                    GetBuilder(
+                                      init: DrawerWithController(),
+                                      builder: (GetxController controller) {
+                                        return Container(
+                                          margin: EdgeInsets.only(top: 3.h),
+                                          height: 10.w,
+                                          width: 50.w,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(5.w),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Text(
+                                                  drawerWithController
+                                                              .numbers.length >=
+                                                          1
+                                                      ? drawerWithController
+                                                          .numbers[0]
+                                                          .toString()
+                                                      : "-",
+                                                  style: TextStyle(
+                                                      fontSize: 15.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text(
+                                                  drawerWithController
+                                                              .numbers.length >=
+                                                          2
+                                                      ? drawerWithController
+                                                          .numbers[1]
+                                                          .toString()
+                                                      : "-",
+                                                  style: TextStyle(
+                                                      fontSize: 15.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text(
+                                                  drawerWithController
+                                                              .numbers.length >=
+                                                          3
+                                                      ? drawerWithController
+                                                          .numbers[2]
+                                                          .toString()
+                                                      : "-",
+                                                  style: TextStyle(
+                                                      fontSize: 15.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text(
+                                                  drawerWithController
+                                                              .numbers.length >=
+                                                          4
+                                                      ? drawerWithController
+                                                          .numbers[3]
+                                                          .toString()
+                                                      : "-",
+                                                  style: TextStyle(
+                                                      fontSize: 15.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: GridView.builder(
+                                          padding: EdgeInsets.all(10),
+                                          itemCount: 12,
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 3,
+                                                  crossAxisSpacing: 18.w,
+                                                  mainAxisSpacing: 1.w),
+                                          itemBuilder: (context, index) {
+                                            return index == 9 || index == 11
+                                                ? SizedBox()
+                                                : GestureDetector(
+                                                    onTap: () {
+                                                      drawerWithController
+                                                          .addNumbers(index);
+                                                    },
+                                                    child: Container(
+                                                        child: Center(
+                                                            child: Text(
+                                                      index == 10
+                                                          ? "0"
+                                                          : "${index + 1}",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 15.sp,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ))),
+                                                  );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+            })
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
         onPressed: () {
-          drawerWithController.showDialPad.value=true;
+          drawerWithController.showDialPad.value = true;
         },
         child: Container(
             height: 40,
@@ -315,8 +460,7 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
                   color: Colors.black26,
                 ),
                 onPressed: () {
-                  drawerWithController.showDialPad.value=false;
-
+                  drawerWithController.showDialPad.value = false;
                 },
               ),
             ),
@@ -328,8 +472,7 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
                   color: Colors.black26,
                 ),
                 onPressed: () {
-                  drawerWithController.showDialPad.value=false;
-
+                  drawerWithController.showDialPad.value = false;
                 },
               ),
             ),
@@ -339,8 +482,7 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
                 color: Colors.black26,
               ),
               onPressed: () {
-                drawerWithController.showDialPad.value=false;
-
+                drawerWithController.showDialPad.value = false;
               },
             ),
             Padding(
@@ -351,8 +493,7 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
                   color: Colors.black26,
                 ),
                 onPressed: () {
-                  drawerWithController.showDialPad.value=false;
-
+                  drawerWithController.showDialPad.value = false;
                 },
               ),
             ),
