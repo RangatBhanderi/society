@@ -44,6 +44,8 @@ dependencies:
   get:
   carousel_slider: ^4.2.1
   mask_text_input_formatter: ^2.5.0
+  firebase_core: ^2.16.0
+  cloud_firestore: ^4.9.2
 
 dev_dependencies:
   flutter_test:

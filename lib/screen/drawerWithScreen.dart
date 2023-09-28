@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -443,7 +444,13 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
           ? SizedBox()
           : FloatingActionButton(
               backgroundColor: Colors.white,
-              onPressed: () {
+              onPressed: () async {
+                CollectionReference student =
+                    FirebaseFirestore.instance.collection('students');
+                await student
+                    .add({'full_name': "Shivam", 'grade': "A", 'age': 10})
+                    .then((value) => print("Student data Added"))
+                    .catchError((error) => print("Student couldn't be added."));
                 drawerWithController.showDialPad.value = true;
               },
               child: Container(
