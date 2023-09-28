@@ -16,6 +16,8 @@ class DrawerWithScreen extends StatefulWidget {
 
 class _DrawerWithScreenState extends State<DrawerWithScreen> {
   DrawerWithController drawerWithController = Get.put(DrawerWithController());
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   var maskFormatter = new MaskTextInputFormatter(
       mask: '##/##/####',
       filter: {"#": RegExp(r'[0-9]')},
@@ -27,8 +29,11 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
+
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      key: _scaffoldKey,
+      resizeToAvoidBottomInset: true,
       drawer: Drawer(
         width: 60.w,
         child: Column(
@@ -81,44 +86,49 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
         backgroundColor: Colors.white,
         title: Row(
           children: [
-            Stack(
-              children: [
-                Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(
-                      10,
+            GestureDetector(
+              onTap: () {
+                _scaffoldKey.currentState!.openDrawer();
+              },
+              child: Stack(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      ),
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.menu_outlined,
+                        size: 20,
+                      ),
                     ),
                   ),
-                  child: Center(
-                    child: Icon(
-                      Icons.menu_outlined,
-                      size: 20,
-                    ),
-                  ),
-                ),
-                Positioned(
-                    right: 2,
-                    top: 5,
-                    child: Container(
-                      height: 20,
-                      width: 30,
-                      child: Center(
-                        child: Text(
-                          "Menu",
-                          style: TextStyle(color: Colors.white, fontSize: 10),
+                  Positioned(
+                      right: 2,
+                      top: 5,
+                      child: Container(
+                        height: 20,
+                        width: 30,
+                        child: Center(
+                          child: Text(
+                            "Menu",
+                            style: TextStyle(color: Colors.white, fontSize: 10),
+                          ),
                         ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Color(0xff544f4e),
-                        borderRadius: BorderRadius.circular(
-                          10,
+                        decoration: BoxDecoration(
+                          color: Color(0xff544f4e),
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
                         ),
-                      ),
-                    ))
-              ],
+                      ))
+                ],
+              ),
             ),
             SizedBox(
               width: 20,
@@ -248,8 +258,8 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
                                     ),
                                   )),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, right: 20,top: 10),
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, top: 10),
                                 child: TextFormField(
                                   maxLines: 7,
                                   style: TextStyle(color: Colors.white),
@@ -429,20 +439,22 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        onPressed: () {
-          drawerWithController.showDialPad.value = true;
-        },
-        child: Container(
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.black,
+      floatingActionButton: keyboardIsOpened
+          ? SizedBox()
+          : FloatingActionButton(
+              backgroundColor: Colors.white,
+              onPressed: () {
+                drawerWithController.showDialPad.value = true;
+              },
+              child: Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.black,
+                  ),
+                  width: 40,
+                  child: Icon(Icons.dialpad)), //icon inside button
             ),
-            width: 40,
-            child: Icon(Icons.dialpad)), //icon inside button
-      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         color: Color(0xffebf0f0),

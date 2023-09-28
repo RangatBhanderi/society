@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -36,6 +37,50 @@ class MyApp extends StatelessWidget {
           home: DrawerWithScreen(),
         );
       },
+    );
+  }
+}
+
+class EverySecond extends StatefulWidget {
+  const EverySecond({super.key});
+
+  @override
+  State<EverySecond> createState() => _EverySecondState();
+}
+
+class _EverySecondState extends State<EverySecond> {
+  Timer? _timer;
+  int a = 20;
+
+  @override
+  void initState() {
+    callMehtod();
+  }
+
+  Future<void> callMehtod() async {
+    Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        if (a == 0) {
+        } else {
+          a--;
+          setState(() {});
+        }
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Container(
+            height: 100,
+            width: 100,
+            color: a == 0 ? Colors.green : Colors.pink,
+            child: Center(child: Text(a != 0 ? "${a}" : "Done"))),
+      ),
     );
   }
 }
