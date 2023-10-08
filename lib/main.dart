@@ -4,17 +4,15 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:sizer/sizer.dart';
-import 'package:society/screen/drawerWithScreen.dart';
-import 'package:society/screen/loginScreen.dart';
-import 'package:society/screen/noticeScreen.dart';
+import 'package:society/screen/firebaseScreen.dart';
 import 'package:society/screen/otpScreen.dart';
 import 'package:society/screen/secondScroll.dart';
-import 'package:society/screen/society_screen.dart';
+import 'package:society/screen/signUpScreen.dart';
+import 'package:society/screen/splashScreen.dart';
 
 import 'invoice_model.dart';
 
@@ -36,7 +34,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Sizer',
           theme: ThemeData.light(),
-          home: DrawerWithScreen(),
+          home: OtpScreen(),
         );
       },
     );
@@ -83,6 +81,154 @@ class _EverySecondState extends State<EverySecond> {
             color: a == 0 ? Colors.green : Colors.pink,
             child: Center(child: Text(a != 0 ? "${a}" : "Done"))),
       ),
+    );
+  }
+}
+
+class NoticeSwipeScreen extends StatefulWidget {
+  const NoticeSwipeScreen({super.key});
+
+  @override
+  State<NoticeSwipeScreen> createState() => _NoticeSwipeScreenState();
+}
+
+class _NoticeSwipeScreenState extends State<NoticeSwipeScreen> {
+  List numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  CarouselController controller = CarouselController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Container(
+          child: Column(
+        children: [
+          Padding(
+              padding: EdgeInsets.only(top: 5.w,left: 5.w,right: 5.w),
+              child: Container(
+                height: 40,
+                child: TextFormField(
+                  // inputFormatters: [maskFormatter],
+                  style: TextStyle(color: Colors.white),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    fillColor: Color(0xffD4F1F4),
+                    filled: true,
+                    contentPadding: EdgeInsets.symmetric(
+                        vertical: 1, horizontal: 20),
+
+                    hintText: 'Search Notice',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                            10)), // Hide the default border
+                  ),
+                ),
+              )),
+
+          CarouselSlider.builder(
+            itemCount: numbers.length,
+            carouselController: controller,
+            options: CarouselOptions(
+                autoPlay: false,
+                reverse: false,
+                viewportFraction: 1,
+                onPageChanged: (index, reasons) {
+                  if (index % 10 == 9) {
+                    print("call");
+                  }
+                }),
+            itemBuilder: (context, index, realIdx) {
+              return Container(
+                height: 100.h,
+                margin: EdgeInsets.all(5.w),
+                width: 100.w,
+                color: Color(0xffD4F1F4),
+                child: Container(
+                    child: Center(child: Text(numbers[index].toString()))),
+              );
+            },
+          ),
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 5.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: (){
+                    Get.to(FireBaseScreen());
+
+                  },
+                  child: Container(
+                    height: 18.w,
+                    width: 25 .w,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(
+                          "assets/images/swiggy.jpg",
+                          fit: BoxFit.fill,
+                          height: 12.w,
+                          width: 12.w,
+                        ),
+                        Text(
+                          "Notice Button",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w100,
+                              fontSize: 12.sp),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 18.w,
+                  width: 25.w,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.asset(
+                        "assets/images/swiggy.jpg",
+                        fit: BoxFit.fill,
+                        height: 12.w,
+                        width: 12.w,
+                      ),
+                      Text(
+                        "Notice Button",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w100,
+                            fontSize: 12.sp),
+                      )
+                    ],
+                  ),
+                ), Container(
+                  height: 18.w,
+                  width: 25.w,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.asset(
+                        "assets/images/swiggy.jpg",
+                        fit: BoxFit.fill,
+                        height: 12.w,
+                        width: 12.w,
+                      ),
+                      Text(
+                        "Notice Button",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w100,
+                            fontSize: 12.sp),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      )),
     );
   }
 }

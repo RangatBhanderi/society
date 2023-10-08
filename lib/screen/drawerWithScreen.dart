@@ -205,7 +205,7 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
                                     child: TextFormField(
                                       style: TextStyle(color: Colors.white),
                                       decoration: InputDecoration(
-                                        fillColor: Color(0xffa6b8ba),
+                                        fillColor: Color(0xffD4F1F4),
                                         filled: true,
                                         contentPadding: EdgeInsets.symmetric(
                                             vertical: 1, horizontal: 20),
@@ -226,11 +226,10 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
                                       style: TextStyle(color: Colors.white),
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
-                                        fillColor: Color(0xffa6b8ba),
+                                        fillColor: Color(0xffD4F1F4),
                                         filled: true,
                                         contentPadding: EdgeInsets.symmetric(
                                             vertical: 1, horizontal: 20),
-
                                         hintText: 'Notice date',
                                         border: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
@@ -247,7 +246,7 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
                                       style: TextStyle(color: Colors.white),
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
-                                        fillColor: Color(0xffa6b8ba),
+                                        fillColor: Color(0xffD4F1F4),
                                         filled: true,
                                         contentPadding: EdgeInsets.symmetric(
                                             vertical: 1, horizontal: 20),
@@ -265,7 +264,7 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
                                   maxLines: 7,
                                   style: TextStyle(color: Colors.white),
                                   decoration: InputDecoration(
-                                    fillColor: Color(0xffa6b8ba),
+                                    fillColor: Color(0xffD4F1F4),
                                     filled: true,
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 20, horizontal: 20),
@@ -290,6 +289,7 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
                                 child: Container(
                                   height: 50,
                                   child: TextFormField(
+                                      keyboardType:TextInputType.number,
                                     style: TextStyle(color: Colors.white),
                                     decoration: InputDecoration(
                                       fillColor: Color(0xffa6b8ba),
@@ -304,134 +304,134 @@ class _DrawerWithScreenState extends State<DrawerWithScreen> {
                                     ),
                                   ),
                                 )),
-                            Expanded(
-                              child: Container(
-                                width: 100.w,
-                                margin: EdgeInsets.only(
-                                    bottom: 10, left: 10, right: 10),
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color(0xfff2b90c),
-                                    Color(0xfff78902),
-                                  ],
-                                )),
-                                child: Column(
-                                  children: [
-                                    GetBuilder(
-                                      init: DrawerWithController(),
-                                      builder: (GetxController controller) {
-                                        return Container(
-                                          margin: EdgeInsets.only(top: 3.h),
-                                          height: 10.w,
-                                          width: 50.w,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(5.w),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Text(
-                                                  drawerWithController
-                                                              .numbers.length >=
-                                                          1
-                                                      ? drawerWithController
-                                                          .numbers[0]
-                                                          .toString()
-                                                      : "-",
-                                                  style: TextStyle(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              Text(
-                                                  drawerWithController
-                                                              .numbers.length >=
-                                                          2
-                                                      ? drawerWithController
-                                                          .numbers[1]
-                                                          .toString()
-                                                      : "-",
-                                                  style: TextStyle(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              Text(
-                                                  drawerWithController
-                                                              .numbers.length >=
-                                                          3
-                                                      ? drawerWithController
-                                                          .numbers[2]
-                                                          .toString()
-                                                      : "-",
-                                                  style: TextStyle(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              Text(
-                                                  drawerWithController
-                                                              .numbers.length >=
-                                                          4
-                                                      ? drawerWithController
-                                                          .numbers[3]
-                                                          .toString()
-                                                      : "-",
-                                                  style: TextStyle(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    SizedBox(
-                                      height: 2.h,
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: GridView.builder(
-                                          padding: EdgeInsets.all(10),
-                                          itemCount: 12,
-                                          gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 3,
-                                                  crossAxisSpacing: 18.w,
-                                                  mainAxisSpacing: 1.w),
-                                          itemBuilder: (context, index) {
-                                            return index == 9 || index == 11
-                                                ? SizedBox()
-                                                : GestureDetector(
-                                                    onTap: () {
-                                                      drawerWithController
-                                                          .addNumbers(index);
-                                                    },
-                                                    child: Container(
-                                                        child: Center(
-                                                            child: Text(
-                                                      index == 10
-                                                          ? "0"
-                                                          : "${index + 1}",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 15.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ))),
-                                                  );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Expanded(
+                            //   child: Container(
+                            //     width: 100.w,
+                            //     margin: EdgeInsets.only(
+                            //         bottom: 10, left: 10, right: 10),
+                            //     decoration: BoxDecoration(
+                            //         gradient: LinearGradient(
+                            //       begin: Alignment.topLeft,
+                            //       end: Alignment.bottomRight,
+                            //       colors: [
+                            //         Color(0xfff2b90c),
+                            //         Color(0xfff78902),
+                            //       ],
+                            //     )),
+                            //     child: Column(
+                            //       children: [
+                            //         GetBuilder(
+                            //           init: DrawerWithController(),
+                            //           builder: (GetxController controller) {
+                            //             return Container(
+                            //               margin: EdgeInsets.only(top: 3.h),
+                            //               height: 10.w,
+                            //               width: 50.w,
+                            //               decoration: BoxDecoration(
+                            //                 color: Colors.white,
+                            //                 borderRadius:
+                            //                     BorderRadius.circular(5.w),
+                            //               ),
+                            //               child: Row(
+                            //                 mainAxisAlignment:
+                            //                     MainAxisAlignment.spaceAround,
+                            //                 children: [
+                            //                   Text(
+                            //                       drawerWithController
+                            //                                   .numbers.length >=
+                            //                               1
+                            //                           ? drawerWithController
+                            //                               .numbers[0]
+                            //                               .toString()
+                            //                           : "-",
+                            //                       style: TextStyle(
+                            //                           fontSize: 15.sp,
+                            //                           fontWeight:
+                            //                               FontWeight.bold)),
+                            //                   Text(
+                            //                       drawerWithController
+                            //                                   .numbers.length >=
+                            //                               2
+                            //                           ? drawerWithController
+                            //                               .numbers[1]
+                            //                               .toString()
+                            //                           : "-",
+                            //                       style: TextStyle(
+                            //                           fontSize: 15.sp,
+                            //                           fontWeight:
+                            //                               FontWeight.bold)),
+                            //                   Text(
+                            //                       drawerWithController
+                            //                                   .numbers.length >=
+                            //                               3
+                            //                           ? drawerWithController
+                            //                               .numbers[2]
+                            //                               .toString()
+                            //                           : "-",
+                            //                       style: TextStyle(
+                            //                           fontSize: 15.sp,
+                            //                           fontWeight:
+                            //                               FontWeight.bold)),
+                            //                   Text(
+                            //                       drawerWithController
+                            //                                   .numbers.length >=
+                            //                               4
+                            //                           ? drawerWithController
+                            //                               .numbers[3]
+                            //                               .toString()
+                            //                           : "-",
+                            //                       style: TextStyle(
+                            //                           fontSize: 15.sp,
+                            //                           fontWeight:
+                            //                               FontWeight.bold)),
+                            //                 ],
+                            //               ),
+                            //             );
+                            //           },
+                            //         ),
+                            //         SizedBox(
+                            //           height: 2.h,
+                            //         ),
+                            //         Expanded(
+                            //           child: Padding(
+                            //             padding: const EdgeInsets.all(10.0),
+                            //             child: GridView.builder(
+                            //               padding: EdgeInsets.all(10),
+                            //               itemCount: 12,
+                            //               gridDelegate:
+                            //                   SliverGridDelegateWithFixedCrossAxisCount(
+                            //                       crossAxisCount: 3,
+                            //                       crossAxisSpacing: 18.w,
+                            //                       mainAxisSpacing: 1.w),
+                            //               itemBuilder: (context, index) {
+                            //                 return index == 9 || index == 11
+                            //                     ? SizedBox()
+                            //                     : GestureDetector(
+                            //                         onTap: () {
+                            //                           drawerWithController
+                            //                               .addNumbers(index);
+                            //                         },
+                            //                         child: Container(
+                            //                             child: Center(
+                            //                                 child: Text(
+                            //                           index == 10
+                            //                               ? "0"
+                            //                               : "${index + 1}",
+                            //                           style: TextStyle(
+                            //                               color: Colors.white,
+                            //                               fontSize: 15.sp,
+                            //                               fontWeight:
+                            //                                   FontWeight.bold),
+                            //                         ))),
+                            //                       );
+                            //               },
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
